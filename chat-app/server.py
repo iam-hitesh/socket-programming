@@ -11,7 +11,7 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 server_socket.bind((IP, PORT))
-server_socket.listen(5)
+server_socket.listen(1)
 
 # List of sockets
 sockets_list = [server_socket]
@@ -49,7 +49,7 @@ while True:
             sockets_list.append(client_socket)
             clients[client_socket] = user
 
-            print("Accepted New Connection")
+            print("Accepted New Connection from %s" % user['data'].decode("utf-8"))
 
         else:
             message = receive_msg(notified_socket)
@@ -61,7 +61,7 @@ while True:
                 continue
 
             user = clients[notified_socket]
-            print("Received Message from")
+            print("Received Message from %s" % user["data"].decode("utf-8"))
 
             for client_socket in clients:
                 if client_socket != notified_socket:
